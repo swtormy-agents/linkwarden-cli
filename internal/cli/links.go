@@ -115,9 +115,13 @@ func (a *app) linksGetCmd() *cobra.Command {
 		Short: "Retrieve one link by id",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			id, err := parseLinkID(args[0])
+			if err != nil {
+				return err
+			}
 			return a.do(context.Background(), linkwarden.Request{
 				Method: http.MethodGet,
-				Path:   "/api/v1/links/" + args[0],
+				Path:   "/api/v1/links/" + id,
 			})
 		},
 	}
@@ -168,9 +172,13 @@ func (a *app) linksUpdateCmd() *cobra.Command {
 			if len(body) == 0 {
 				return usageErr("provide --json or --body with fields to update")
 			}
+			id, err := parseLinkID(args[0])
+			if err != nil {
+				return err
+			}
 			return a.do(context.Background(), linkwarden.Request{
 				Method: http.MethodPut,
-				Path:   "/api/v1/links/" + args[0],
+				Path:   "/api/v1/links/" + id,
 				Body:   body,
 			})
 		},
@@ -189,12 +197,24 @@ func (a *app) linksDeleteCmd() *cobra.Command {
 			if err := a.requireWrite("links delete"); err != nil {
 				return err
 			}
+			id, err := parseLinkID(args[0])
+			if err != nil {
+				return err
+			}
 			return a.do(context.Background(), linkwarden.Request{
 				Method: http.MethodDelete,
-				Path:   "/api/v1/links/" + args[0],
+				Path:   "/api/v1/links/" + id,
 			})
 		},
 	}
+}
+
+func parseLinkID(raw string) (string, error) {
+	id, err := strconv.ParseUint(raw, 10, 64)
+	if err != nil || id == 0 {
+		return "", usageErr("link ID must be a positive integer")
+	}
+	return strconv.FormatUint(id, 10), nil
 }
 
 func (a *app) readBody(filePath, jsonInline string) ([]byte, error) {

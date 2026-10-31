@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install linkwarden from GitHub Releases (draft or published).
-#   curl -fsSL https://raw.githubusercontent.com/swtormy-agents/linkwarden-cli/main/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/swtormy-agents/linkwarden-cli/v0.1.0/scripts/install.sh | bash
 # Environment:
 #   LINKWARDEN_VERSION     release tag to install (default: latest)
 #   LINKWARDEN_INSTALL_DIR target directory (default: /usr/local/bin if writable, else ~/.local/bin)

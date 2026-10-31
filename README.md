@@ -23,8 +23,18 @@ Releases are published as **drafts** first; pick the latest draft or published r
 
 ### Install script
 
+Pinned to release tag `v0.1.0`:
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/swtormy-agents/linkwarden-cli/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/swtormy-agents/linkwarden-cli/v0.1.0/scripts/install.sh | bash
+```
+
+Safer alternative — download, inspect, then run:
+
+```bash
+curl -fsSL -o install-linkwarden.sh https://raw.githubusercontent.com/swtormy-agents/linkwarden-cli/v0.1.0/scripts/install.sh
+# review install-linkwarden.sh
+bash install-linkwarden.sh
 ```
 
 Environment variables:
