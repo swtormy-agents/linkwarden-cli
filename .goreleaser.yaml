@@ -1,0 +1,56 @@
+version: 2
+
+project_name: linkwarden
+
+before:
+  hooks:
+    - go install github.com/google/go-licenses@v1.6.0
+    - bash scripts/generate-third-party-notices.sh
+
+builds:
+  - id: linkwarden
+    main: ./cmd/linkwarden
+    binary: linkwarden
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X=github.com/swtormy-agents/linkwarden-cli/internal/cli.Version={{.Version}}
+      - -X=github.com/swtormy-agents/linkwarden-cli/internal/cli.Commit={{.Commit}}
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - LICENSE
+      - NOTICE
+      - THIRD_PARTY_NOTICES
+      - src: third_party_licenses/**
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^chore:'
+      - '^test:'
+
+release:
+  draft: true
+  mode: replace

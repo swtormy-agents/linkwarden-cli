@@ -1,0 +1,11 @@
+linkwarden-cli
+
+The following third-party software is included or referenced by this project:
+
+- github.com/spf13/cobra — Apache License 2.0
+- github.com/spf13/pflag — BSD-3-Clause
+- github.com/itchyny/gojq — MIT License
+- github.com/itchyny/timefmt-go — MIT License
+- github.com/inconshreveable/mousetrap — Apache License 2.0
+
+See module dependencies in go.sum for full versions.
